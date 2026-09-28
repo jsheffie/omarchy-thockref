@@ -133,7 +133,9 @@ Panel {
       return
     }
     root.loading = true
-    loadProc.command = ["bash", root.listScript, root.configDir]
+    // timeout keeps a wedged read (say, a FIFO dropped into the directory)
+    // from leaving the panel stuck in the loading state.
+    loadProc.command = ["timeout", "20", "bash", root.listScript, root.configDir]
     loadProc.running = true
   }
 

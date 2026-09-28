@@ -10,7 +10,7 @@ export OMARCHY_PATH ?= /usr/share/omarchy
 help:
 	@echo "ThockRef for Omarchy ($(VERSION))"
 	@echo ""
-	@echo "  make test       run the model tests (node)"
+	@echo "  make test       run the model tests (node) and the lister tests (bash)"
 	@echo "  make validate   omarchy plugin validate on this checkout"
 	@echo "  make link       symlink this checkout into ~/.config/omarchy/plugins and rescan"
 	@echo "  make unlink     disable, remove the symlink, rescan"
@@ -24,6 +24,7 @@ help:
 
 test:
 	node test/model.test.js
+	bash test/list-libraries.test.sh
 
 check-version:
 	@test "$$(jq -r .version manifest.json)" = "$(VERSION)" || { echo "manifest.json version does not match VERSION"; exit 1; }
