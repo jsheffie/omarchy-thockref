@@ -2,10 +2,8 @@ PLUGIN_ID  = io.github.jsheffie.thockref
 REPO_DIR  := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 LINK       = $(HOME)/.config/omarchy/plugins/$(PLUGIN_ID)
 VERSION   := $(shell cat VERSION)
-# The running shell's install path; Omarchy exports it for interactive shells.
-# Fall back to the session's value, then the package location.
-SESSION_OMARCHY_PATH := $(shell systemctl --user show-environment 2>/dev/null | sed -n 's/^OMARCHY_PATH=//p' | tail -n 1)
-export OMARCHY_PATH ?= $(if $(SESSION_OMARCHY_PATH),$(SESSION_OMARCHY_PATH),/usr/share/omarchy)
+# Omarchy exports this for interactive shells; default to the package location.
+export OMARCHY_PATH ?= /usr/share/omarchy
 
 .PHONY: help test check-version validate link unlink reload enable disable toggle refresh seed dist
 

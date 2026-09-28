@@ -102,9 +102,9 @@ Removing the plugin leaves `~/.config/thockref/` untouched.
 
 ## Development
 
+Check out this repository, then from its directory:
+
 ```sh
-git clone https://github.com/jsheffie/omarchy-thockref.git
-cd omarchy-thockref
 make test        # node tests for the parser and search
 make link        # validate, then symlink this checkout into ~/.config/omarchy/plugins
 make enable      # put the widget on the bar
