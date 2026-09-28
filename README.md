@@ -4,7 +4,8 @@ Your own keyboard-shortcut cheat sheets for any app, written in Markdown, search
 
 ThockRef adds a keyboard icon to the bar. Click it (or press a hotkey) to get a searchable list of shortcut "libraries": one Markdown file per app, tool, or workflow. Type to search every shortcut in every library at once, or open a library to browse its sections, its optional keyboard-layout legend, and its links.
 
-![ThockRef panel](preview.png)
+![ThockRef Keymap List](preview1.png)
+![ThockRef Neovim Kickstart List](preview.png)
 
 It is the Linux counterpart of the [ThockRef macOS menu-bar app](https://github.com/jsheffie/ThockRef). Both read the same files from the same directory, so a set of cheat sheets works on either machine.
 
