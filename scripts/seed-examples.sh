@@ -6,7 +6,9 @@
 # The app sorts files by name and strips that prefix from the display name.
 #
 #   seed  copy files that are not installed yet (matched by name, any prefix)
-#   dist  remove all installed .md files, then copy every listed file
+#   dist  remove the copies this script made that are still identical to the
+#         examples, then copy every listed file afresh (renumbering them).
+#         Files you edited, and files this script never installed, are kept.
 set -eu
 
 mode=${1:-}
@@ -46,20 +48,32 @@ done
 mkdir -p "$config_dir"
 
 if [ "$mode" = dist ]; then
-    rm -f "$config_dir"/*.md
-    echo "Removed $config_dir/*.md"
+    # Only a NNN- prefixed file whose name is a listed example and whose
+    # contents still match that example is ours to remove.
+    for f in "$config_dir"/[0-9][0-9][0-9]-*.md; do
+        [ -f "$f" ] || continue
+        base=$(basename "$f" | sed 's/^[0-9][0-9][0-9]-//')
+        if printf '%s\n' $names | grep -qxF "$base" && cmp -s "$f" "$examples_dir/$base"; then
+            rm -f "$f"
+            echo "Removed $f"
+        fi
+    done
 fi
 
 n=0
 for name in $names; do
     n=$((n + 1))
     dest=$config_dir/$(printf '%03d' "$n")-$name
-    if [ "$mode" = seed ]; then
-        existing=$(ls "$config_dir"/[0-9][0-9][0-9]-"$name" "$config_dir/$name" 2>/dev/null | head -n 1)
-        if [ -n "$existing" ]; then
+    existing=$(ls "$config_dir"/[0-9][0-9][0-9]-"$name" "$config_dir/$name" 2>/dev/null | head -n 1)
+    if [ -n "$existing" ]; then
+        if [ "$mode" = seed ]; then
             echo "Skipped $name (already installed as $existing)"
-            continue
+        else
+            echo "Kept $existing (differs from the example, so it is yours)"
         fi
+        continue
+    fi
+    if [ "$mode" = seed ]; then
         echo "Seeded $dest"
     else
         echo "Dist $dest"

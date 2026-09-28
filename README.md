@@ -48,7 +48,7 @@ Middle-click the bar icon to re-read the data directory. Search understands modi
 
 ## Adding your own libraries
 
-Libraries are Markdown files in `~/.config/thockref/` (or `$XDG_CONFIG_HOME/thockref/`). The directory is created the first time the panel opens. Files are listed in filename order; a `NNN-` prefix (`001-vim-motions.md`) controls the order and is stripped from the display name, and hyphens become spaces (`nvim-octo-keys.md` shows as "Nvim Octo Keys").
+Libraries are Markdown files in `~/.config/thockref/` (or `$XDG_CONFIG_HOME/thockref/`). The directory is created the first time the panel opens. Only regular files are read (symlinks are ignored), each up to 1 MiB and 8 MiB in total; anything past that is skipped. Files are listed in filename order; a `NNN-` prefix (`001-vim-motions.md`) controls the order and is stripped from the display name, and hyphens become spaces (`nvim-octo-keys.md` shows as "Nvim Octo Keys").
 
 A library is any Markdown file with two-column pipe tables:
 
@@ -80,7 +80,7 @@ The `examples/` folder has twenty ready-made libraries (Vim motions, Neovim, Gho
 ```sh
 cd ~/.config/omarchy/plugins/io.github.jsheffie.thockref
 make seed      # copies examples that are not already installed
-make dist      # replaces ~/.config/thockref/*.md with the examples
+make dist      # re-copies the examples, replacing only unedited copies it made earlier
 ```
 
 The order comes from `examples/thockref-files-order`.

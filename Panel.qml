@@ -39,6 +39,9 @@ Panel {
   }
   readonly property string listScript: decodeURIComponent(
     Qt.resolvedUrl("list-libraries.sh").toString().replace(/^file:\/\//, ""))
+  // list-libraries.sh caps its output at 8 MiB of file content; JSON escaping
+  // can at most double that. Anything larger is not something to parse here.
+  readonly property int maxScanChars: 20 * 1024 * 1024
 
   // ---- View state. The search field is the source of truth for the query.
   readonly property string query: searchField.text
@@ -148,7 +151,14 @@ Panel {
 
     stdout: StdioCollector {
       waitForEnd: true
-      onStreamFinished: root.applyScan(String(text || ""))
+      onStreamFinished: {
+        var raw = String(text || "")
+        if (raw.length > root.maxScanChars) {
+          console.warn("ThockRef: ignoring an oversized library scan (" + raw.length + " chars)")
+          raw = "[]"
+        }
+        root.applyScan(raw)
+      }
     }
 
     onExited: {
