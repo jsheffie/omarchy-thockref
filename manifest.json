@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "io.github.jsheffie.thockref",
+  "name": "ThockRef",
+  "version": "0.1.0",
+  "author": "Jeff Sheffield",
+  "license": "MIT",
+  "description": "Searchable keyboard-shortcut reference built from your own Markdown files in ~/.config/thockref.",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "BarWidget.qml" },
+  "barWidget": {
+    "displayName": "ThockRef",
+    "description": "Keyboard shortcut reference panel",
+    "category": "Info",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
