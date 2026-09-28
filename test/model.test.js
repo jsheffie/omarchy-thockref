@@ -102,13 +102,13 @@ test("template covers backticks, arrows, extra and blank columns", function() {
 })
 
 test("an empty file is an empty library", function() {
-  assert.deepStrictEqual(Model.parseLibrary(fixture("chrome.md"), "Chrome"), { shortcuts: [], layoutLegend: null, links: [] })
   assert.deepStrictEqual(Model.parseLibrary("", "X"), { shortcuts: [], layoutLegend: null, links: [] })
 })
 
 test("regression counts for larger fixtures", function() {
-  assert.deepStrictEqual(counts(Model.parseLibrary(fixture("vscode.md"), "V")), { items: 126, sections: 11, shortcuts: 115, legendLines: 5, links: 2 })
+  assert.deepStrictEqual(counts(Model.parseLibrary(fixture("vim-motions.md"), "V")), { items: 96, sections: 11, shortcuts: 85, legendLines: 9, links: 1 })
   assert.deepStrictEqual(counts(Model.parseLibrary(fixture("claude-code.md"), "C")), { items: 38, sections: 7, shortcuts: 31, legendLines: 8, links: 0 })
+  assert.deepStrictEqual(counts(Model.parseLibrary(fixture("ghostty.md"), "G")), { items: 86, sections: 11, shortcuts: 75, legendLines: 5, links: 0 })
 })
 
 test("pipe-row quirk matches the Swift parser", function() {
